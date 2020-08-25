@@ -45,6 +45,10 @@ namespace MyCouldBook
             {
                 Configuration.Modules.AbpWebCommon().SendAllExceptionsToClients = true;
             }
+            else
+            {
+                Configuration.Modules.AbpWebCommon().SendAllExceptionsToClients = false;
+            }
 
             // Use database for language management
             Configuration.Modules.Zero().LanguageManagement.EnableDbLocalization();
