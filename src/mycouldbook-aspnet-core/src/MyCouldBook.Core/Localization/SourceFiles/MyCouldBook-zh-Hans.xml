@@ -6,7 +6,7 @@
     <text name="WelcomeMessage" value="欢迎使用 MyCouldBook!" />
     <text name="PleaseWait" value="页面加载中，请等待..." />
     <text name="MultiLevelMenu" value="多级菜单" />
-
+    <text name="Search" value="搜索" />
     
 
     <!--租户有关的内容-->
@@ -100,6 +100,7 @@
     <text name="ChangingPermissions" value="更改权限" />
     <text name="EditingUser" value="修改用户" />
     <text name="CreatingNewUser" value="添加用户" />
+
     <text name="Edit" value="修改" />
 
     <text name="EditingRole" value="修改角色" />
@@ -242,17 +243,44 @@
     
     <!--云书单-->
       <text name="CloudBooks" value="云书单" />
-      <text name="Books" value="书单" />
+      <text name="Book" value="书籍" />
+      <text name="BookName" value="书籍名称" />
+      <text name="BookNameInputDesc" value="请输入书籍名称" />
       <text name="Create" value="新增" />
       <text name="BatchDelete" value="批量删除" />
       <text name="ClearEmpty" value="清空" />
-      <text name="ImgUrl" value="封面" />
-      <text name="Author" value="作者" />
-      <text name="Intro" value="简介" />
+      <text name="BookPriceUrl" value="购买链接" />
+      <text name="BookPriceUrlInputDesc" value="请输入购买链接" />
+      <text name="BookImgUrl" value="封面链接" />
+      <text name="BookImgUrlInputDesc" value="请输入封面链接" />
+      <text name="BookAuthor" value="作者" />
+      <text name="BookAuthorInputDesc" value="请输入作者" />
+      <text name="BookIntro" value="简介" />
+      <text name="BookIntroInputDesc" value="请输入简介" />
+      <text name="ManageBook" value="管理" />
+      <text name="QueryBook" value="查询" />
+      <text name="CreateBook" value="添加" />
+      <text name="EditBook" value="编辑" />
+      <text name="DeleteBook" value="删除" />
+      <text name="BatchDeleteBook" value="批量删除" />
+      <text name="ExportBook" value="导出" />
+      <text name="BookList" value="列表" />
       <text name="GridFooterDisplayText" value="当前{0}页/共{1}页.共{2}条/显示{3}-{4}条" />
       <text name="GridSelectedXItemsTips">
           <![CDATA[已选择<strong class="text-primary">{0}</strong>项]]>
-      </text> 
+      </text>
+      <!--标签-->
+      <text name="BookTag" value="标签" />
+      <text name="ManageBookTag" value="管理" />
+      <text name="QueryBookTag" value="查询" />
+      <text name="CreateBookTag" value="添加" />
+      <text name="EditBookTag" value="编辑" />
+      <text name="DeleteBookTag" value="删除" />
+      <text name="BatchDeleteBookTag" value="批量删除" />
+      <text name="ExportBookTag" value="导出" />
+      <text name="BookTagList" value="列表" />
+      <text name="BookTagTagName" value="标签名称" />
+      <text name="BookTagTagNameInputDesc" value="请输入标签名称" />
   </texts>
 </localizationDictionary>
 

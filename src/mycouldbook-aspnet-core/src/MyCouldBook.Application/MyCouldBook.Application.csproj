@@ -19,7 +19,4 @@
   <ItemGroup>
     <ProjectReference Include="..\MyCouldBook.Core\MyCouldBook.Core.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="BookListManagement\" />
-  </ItemGroup>
 </Project>

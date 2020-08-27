@@ -1,21 +1,28 @@
-﻿using Abp.Application.Services.Dto;
-using System;
-using System.Collections.Generic;
+
+
 using System.ComponentModel.DataAnnotations;
-using System.Text;
+using Abp.Application.Services.Dto;
 
 namespace MyCouldBook.Dtos
 {
     public class PagedInputDto : IPagedResultRequest
     {
-        [Range(0,int.MaxValue)]
-        public int SkipCount { get; set; }
-        [Range(1,AppConsts.MaxPageSize)]
+        [Range(1, AppConsts.MaxPageSize)]
         public int MaxResultCount { get; set; }
+
+        [Range(0, int.MaxValue)]
+        public int SkipCount { get; set; }
+
+
+
+		 
+		 
+         
+
 
         public PagedInputDto()
         {
-            this.MaxResultCount = AppConsts.DefaultPageSize;
+            MaxResultCount = AppConsts.DefaultPageSize;
         }
     }
 }

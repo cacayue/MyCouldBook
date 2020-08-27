@@ -2,8 +2,7 @@ using Abp.AutoMapper;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using MyCouldBook.Authorization;
-using MyCouldBook.BookListManagement.Books.Authorization;
-using MyCouldBook.BookListManagement.Books.Mapper;
+using MyCouldBook.CustomDtoAutoMapper;
 using MyCouldBook.Roles.Dto;
 using MyCouldBook.Users.Dto;
 
@@ -19,9 +18,14 @@ namespace MyCouldBook
             Configuration.Authorization.Providers.Add<MyCouldBookAuthorizationProvider>();
             //添加书籍权限
             Configuration.Authorization.Providers.Add<BookAuthorizationProvider>();
+            Configuration.Authorization.Providers.Add<BookTagAuthorizationProvider>();
+            Configuration.Authorization.Providers.Add<BookListAuthorizationProvider>();
+
             Configuration.Modules.AbpAutoMapper().Configurators.Add(config =>
             {
-                BookMapper.CreateMappings(config);
+                BookDtoAutoMapper.CreateMappings(config);
+                BookTagDtoAutoMapper.CreateMappings(config);
+                BookListDtoAutoMapper.CreateMappings(config);
                 config.AddProfile<RoleMapProfile>();
                 config.AddProfile<UserMapProfile>();
                 config.AddProfile<RoleMapProfile>();

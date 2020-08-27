@@ -1383,6 +1383,59 @@ namespace MyCouldBook.Migrations
                     b.ToTable("Books");
                 });
 
+            modelBuilder.Entity("MyCouldBook.BookListManagement.RelationShipps.BookAndBookTag", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("BookId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("BookTagId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TagId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("BookTagId");
+
+                    b.ToTable("BookAndBookTags");
+                });
+
+            modelBuilder.Entity("MyCouldBook.BookListManagement.RelationShipps.BookListAndBook", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("BookId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("BookListId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("BookListId");
+
+                    b.ToTable("BookListAndBooks");
+                });
+
             modelBuilder.Entity("MyCouldBook.MultiTenancy.Tenant", b =>
                 {
                     b.Property<int>("Id")
@@ -1604,6 +1657,34 @@ namespace MyCouldBook.Migrations
                     b.HasOne("MyCouldBook.Authorization.Users.User", "LastModifierUser")
                         .WithMany()
                         .HasForeignKey("LastModifierUserId");
+                });
+
+            modelBuilder.Entity("MyCouldBook.BookListManagement.RelationShipps.BookAndBookTag", b =>
+                {
+                    b.HasOne("MyCouldBook.BookListManagement.Books.Book", "Book")
+                        .WithMany("BookAndBookTags")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MyCouldBook.BookListManagement.BookTag.BookTag", "BookTag")
+                        .WithMany()
+                        .HasForeignKey("BookTagId");
+                });
+
+            modelBuilder.Entity("MyCouldBook.BookListManagement.RelationShipps.BookListAndBook", b =>
+                {
+                    b.HasOne("MyCouldBook.BookListManagement.Books.Book", "Book")
+                        .WithMany("BookListAndBooks")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MyCouldBook.BookListManagement.BookList.BookList", "BookList")
+                        .WithMany()
+                        .HasForeignKey("BookListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyCouldBook.MultiTenancy.Tenant", b =>

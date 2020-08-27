@@ -1,49 +1,80 @@
-import { finalize } from 'rxjs/operators';
 import {
-  BookServiceProxy,
+  Component,
+  OnInit,
+  Injector,
+  Input,
+  ViewChild,
+  AfterViewInit,
+} from '@angular/core';
+import { ModalComponentBase } from '@shared/component-base/modal-component-base';
+import {
   CreateOrUpdateBookInput,
-  BookEditInput,
-} from './../../../../shared/service-proxies/service-proxies';
-import { Component, OnInit, Injector } from '@angular/core';
-import { ModalComponentBase } from '@shared/component-base';
+  BookEditDto,
+  BookServiceProxy,
+  BookTagSelectedListDto,
+} from '@shared/service-proxies/service-proxies';
+import { Validators, AbstractControl, FormControl } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
+
 @Component({
-  selector: 'app-create-or-edit-book',
+  selector: 'create-or-edit-book',
   templateUrl: './create-or-edit-book.component.html',
-  styles: [],
+  styleUrls: ['create-or-edit-book.component.less'],
 })
 export class CreateOrEditBookComponent extends ModalComponentBase
   implements OnInit {
+  /**
+   * 编辑时DTO的id
+   */
   id: any;
-  entityDto: BookEditInput = new BookEditInput();
+
+  entity: BookEditDto = new BookEditDto();
+
+  tags: any;
+
+  selectedTags: any = [];
+
+  /**
+   * 构造函数，在此处配置依赖注入
+   */
   constructor(injector: Injector, private _bookService: BookServiceProxy) {
     super(injector);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.init();
   }
 
+  /**
+   * 初始化方法
+   */
   init(): void {
-    //获取编辑中的实体
-    this._bookService.getForEditBook(this.id).subscribe(res => {
-      this.entityDto = res.book;
+    this._bookService.getForEdit(this.id).subscribe(result => {
+      this.entity = result.book;
+      this.tags = result.bookTags;
     });
   }
-  //保存实体
+
+  /**
+   * 保存方法,提交form表单
+   */
   submitForm(): void {
     const input = new CreateOrUpdateBookInput();
-    input.book = this.entityDto;
+    input.book = this.entity;
+    input.tagIds = this.selectedTags;
     this.saving = true;
+
     this._bookService
-      .createOrUpdateBook(input)
-      .pipe(
-        finalize(() => {
-          this.saving = false;
-        }),
-      )
+      .createOrUpdate(input)
+      .finally(() => (this.saving = false))
+      .pipe(finalize(() => (this.saving = false)))
       .subscribe(() => {
-        abp.notify.success('信息保存成功');
+        this.notify.success(this.l('SavedSuccessfully'));
         this.success(true);
       });
+  }
+
+  tagSelectChange(data: any[]) {
+    this.selectedTags = data;
   }
 }

@@ -1,66 +1,136 @@
 <form nz-form #validateForm="ngForm" (ngSubmit)="submitForm()" nzLayout="horizontal" autocomplete="off">
-  <!-- 头部-->
+  <!-- 模态框头部 -->
   <div class="modal-header">
     <div class="modal-title">
-      <div class="anticon anticon-medicine-box mr-sm">
-
-        <span *ngIf="entityDto.id">编辑</span>
-        <span *ngIf="!entityDto.id">添加</span>
-      </div>
+      <i class="iconfont icon-medicine-box mr-sm"></i>
+      <span *ngIf="entity.id">{{l('Edit')}}</span>
+      <span *ngIf="!entity.id">{{l('Create')}}</span>
     </div>
   </div>
-  <!-- 详情-->
+  <!-- 模态框内容 -->
   <fieldset>
+    <!-- 提示信息 -->
+    <!-- <nz-alert nzType="info" nzCloseable [nzShowIcon]="true" nzMessage="l('我想提示点什么内容给你说')"></nz-alert> -->
+    <!-- 书籍名称 : Name 的控件范围=Start= -->
     <nz-form-item nz-row>
-      <nz-form-label nzFor='imgUrl' nzSm="6" nzXs="24">封面图片URL</nz-form-label>
-      <nz-form-control nzSm="6" nzXs="24" nz-col nzHasFeedback>
-        <input nz-input #imgUrl="ngModel" name="imgUrl" [(ngModel)]="entityDto.imgUrl" placeholder="请输入封面图片">
-      </nz-form-control>
-    </nz-form-item>
+      <nz-form-label nz-col [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">
+        {{l('BookName')}}
+      </nz-form-label>
+      <nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
+        <!--  控件位置 -->
+        <input nz-input name="name" #name="ngModel" [(ngModel)]="entity.name" [placeholder]="l('BookNameInputDesc')"
+          required maxlength='50' minlength='1'>
 
-    <nz-form-item nz-row>
-      <nz-form-label nzFor='name' nzRequired nzSm="6" nzXs="24">书籍名称</nz-form-label>
-      <nz-form-control nzSm="6" nzXs="24" nz-col nzHasFeedback>
-        <input nz-input #name="ngModel" required name="name" [(ngModel)]="entityDto.name" placeholder="请输入书籍名称">
-        <nz-form-explain *ngIf="(name.control.dirty || name.control.touched) && name.control.errors">
-          <ng-container *ngIf="name.control.hasError('required')">内容不能为空</ng-container>
+        <!-- 校验 -->
+        <nz-form-explain *ngIf="name.control.dirty
+                                                 &&name.control.errors">
+          <ng-container *ngIf="name.control.hasError('maxlength')">{{l('MaxLength')+50}}</ng-container>
+          <ng-container *ngIf="name.control.hasError('minlength')">{{l('MinLength')+1}}</ng-container>
+          <ng-container *ngIf="name.control.hasError('required')">{{l('ThisFieldIsRequired')}}</ng-container>
         </nz-form-explain>
-      </nz-form-control>
-    </nz-form-item>
 
+      </nz-form-control>
+
+    </nz-form-item>
+    <!--书籍名称 : Name 的控件范围结束=END= -->
+    <!-- 作者 : Author 的控件范围=Start= -->
     <nz-form-item nz-row>
-      <nz-form-label nzFor='author' nzRequired nzSm="6" nzXs="24">作者</nz-form-label>
-      <nz-form-control nzSm="6" nzXs="24" nz-col nzHasFeedback>
-        <input nz-input #author="ngModel" required name="author" [(ngModel)]="entityDto.author" placeholder="请输入作者">
-        <nz-form-explain *ngIf="(author.control.dirty || author.control.touched) && author.control.errors">
-          <ng-container *ngIf="author.control.hasError('required')">内容不能为空</ng-container>
+      <nz-form-label nz-col [nzSm]="6" [nzXs]="24" nzRequired nzFor="author">
+        {{l('BookAuthor')}}
+      </nz-form-label>
+      <nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
+        <!--  控件位置 -->
+        <input nz-input name="author" #author="ngModel" [(ngModel)]="entity.author"
+          [placeholder]="l('BookAuthorInputDesc')" required maxlength='50' minlength='1'>
+
+        <!-- 校验 -->
+        <nz-form-explain *ngIf="author.control.dirty
+                                                 &&author.control.errors">
+          <ng-container *ngIf="author.control.hasError('maxlength')">{{l('MaxLength')+50}}</ng-container>
+          <ng-container *ngIf="author.control.hasError('minlength')">{{l('MinLength')+1}}</ng-container>
+          <ng-container *ngIf="author.control.hasError('required')">{{l('ThisFieldIsRequired')}}</ng-container>
         </nz-form-explain>
-      </nz-form-control>
-    </nz-form-item>
 
-    <nz-form-item nz-row>
-      <nz-form-label nzFor='intro' nzSm="6" nzXs="24">简介</nz-form-label>
-      <nz-form-control nzSm="6" nzXs="24" nz-col nzHasFeedback>
-        <input nz-input #intro="ngModel" name="intro" [(ngModel)]="entityDto.intro" placeholder="请输入简介">
       </nz-form-control>
-    </nz-form-item>
 
+    </nz-form-item>
+    <!--作者 : Author 的控件范围结束=END= -->
+    <!-- 购买链接 : PriceUrl 的控件范围=Start= -->
     <nz-form-item nz-row>
-      <nz-form-label nzFor='priceUrl' nzSm="6" nzXs="24">购买URL</nz-form-label>
-      <nz-form-control nzSm="6" nzXs="24" nz-col nzHasFeedback>
-        <input nz-input #priceUrl="ngModel" name="priceUrl" [(ngModel)]="entityDto.priceUrl" placeholder="请输入购买URL">
-        <nz-form-explain *ngIf="(priceUrl.control.dirty || priceUrl.control.touched) && priceUrl.control.errors">
-          <ng-container *ngIf="priceUrl.control.hasError('required')">内容不能为空</ng-container>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="priceUrl">
+        {{l('BookPriceUrl')}}
+      </nz-form-label>
+      <nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
+        <!--  控件位置 -->
+        <input nz-input name="priceUrl" #priceUrl="ngModel" [(ngModel)]="entity.priceUrl"
+          [placeholder]="l('BookPriceUrlInputDesc')" minlength='10'>
+
+        <!-- 校验 -->
+        <nz-form-explain *ngIf="priceUrl.control.dirty
+                                                 &&priceUrl.control.errors">
+          <ng-container *ngIf="priceUrl.control.hasError('minlength')">{{l('MinLength')+10}}</ng-container>
         </nz-form-explain>
+
       </nz-form-control>
+
+    </nz-form-item>
+    <!--购买链接 : PriceUrl 的控件范围结束=END= -->
+    <!-- 封面链接 : ImgUrl 的控件范围=Start= -->
+    <nz-form-item nz-row>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="imgUrl">
+        {{l('BookImgUrl')}}
+      </nz-form-label>
+      <nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
+        <!--  控件位置 -->
+        <input nz-input name="imgUrl" #imgUrl="ngModel" [(ngModel)]="entity.imgUrl"
+          [placeholder]="l('BookImgUrlInputDesc')">
+
+
+      </nz-form-control>
+
+    </nz-form-item>
+    <!--封面链接 : ImgUrl 的控件范围结束=END= -->
+    <!-- 简介 : Intro 的控件范围=Start= -->
+    <nz-form-item nz-row>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="intro">
+        {{l('BookIntro')}}
+      </nz-form-label>
+      <nz-form-control nz-col [nzSm]="14" [nzXs]="24" nzHasFeedback>
+        <!--  控件位置 -->
+        <textarea nz-input name="intro" #intro="ngModel" [(ngModel)]="entity.intro"
+          [placeholder]="l('BookIntroInputDesc')" nzAutosize maxlength='200' minlength='10'></textarea>
+
+        <!-- 校验 -->
+        <nz-form-explain *ngIf="intro.control.dirty
+                                                 &&intro.control.errors">
+          <ng-container *ngIf="intro.control.hasError('maxlength')">{{l('MaxLength')+200}}</ng-container>
+          <ng-container *ngIf="intro.control.hasError('minlength')">{{l('MinLength')+10}}</ng-container>
+        </nz-form-explain>
+
+      </nz-form-control>
+
+    </nz-form-item>
+    <!--简介 : Intro 的控件范围结束=END= -->
+    <nz-form-item nz-row>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="bookTag">
+        {{l('BookTag')}}
+      </nz-form-label>
+      <nz-form-control nz-col [nzSm]="14" [nzXs]="24">
+        <!--  控件位置 -->
+        <app-book-tag-select name="tag" [tagsSourceData]="tags" (selectedDataChange)="tagSelectChange($event)">
+        </app-book-tag-select>
+      </nz-form-control>
+
     </nz-form-item>
   </fieldset>
-  <!-- 底部-->
+  <!-- 模态框底部 -->
   <div class="modal-footer">
-    <button (click)="close()" type="button" nzType="default" [disabled]="saving" nz-button><i
-        class="anticon anticon-close-circle-o"></i>取消</button>
-    <button type="submit" nzType="primary" nz-button [disabled]="!validateForm.form.valid||saving" [nzLoading]="saving">
-      <i class="anticon anticon-save">保存</i>
+    <button nz-button [nzType]="'default'" type="button" (click)="close()" [disabled]="saving">
+      <i class="iconfont icon-close-circle"></i> {{l("Cancel")}}
+    </button>
+    <button nz-button [nzType]="'primary'" type="submit" [disabled]="!validateForm.form.valid|| saving"
+      [nzLoading]="saving">
+      <i class="iconfont icon-save" *ngIf="!saving"></i> {{l("Save")}}
     </button>
   </div>
 </form>

@@ -1,3 +1,5 @@
+import { BookTagSelectComponent } from './components/book-tag-select/book-tag-select.component';
+import { ImgShowComponent } from './components/img-show/img-show.component';
 import { TitleService } from '@delon/theme';
 import { LocalizationService } from './../../shared/i18n/localization.service';
 import { AbpModule } from '@abp/abp.module';
@@ -7,12 +9,24 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CloudBookListRoutingModule } from './cloud-book-list-routing.module';
-import { BooksComponent } from './books/books.component';
-import { BookListComponent } from './book-list/book-list.component';
 import { CreateOrEditBookComponent } from './books/create-or-edit-book/create-or-edit-book.component';
+import { BookComponent } from './books/book.component';
+import { BookListComponent } from './book-list/book-list.component';
+import { BookTagComponent } from './book-tag/book-tag.component';
+import { CreateOrEditBookTagComponent } from './book-tag/create-or-edit-book-tag/create-or-edit-book-tag.component';
+import { CreateOrEditBookListComponent } from './book-list/create-or-edit-book-list/create-or-edit-book-list.component';
 
 @NgModule({
-  declarations: [BooksComponent, BookListComponent, CreateOrEditBookComponent],
+  declarations: [
+    BookComponent,
+    BookListComponent,
+    CreateOrEditBookComponent,
+    BookTagComponent,
+    CreateOrEditBookTagComponent,
+    ImgShowComponent,
+    BookTagSelectComponent,
+    CreateOrEditBookListComponent,
+  ],
   imports: [
     CommonModule,
     CloudBookListRoutingModule,
@@ -21,9 +35,14 @@ import { CreateOrEditBookComponent } from './books/create-or-edit-book/create-or
     AbpModule,
   ],
   entryComponents: [
-    BooksComponent,
+    BookComponent,
     BookListComponent,
+    BookTagComponent,
     CreateOrEditBookComponent,
+    CreateOrEditBookTagComponent,
+    ImgShowComponent,
+    BookTagSelectComponent,
+    CreateOrEditBookListComponent,
   ],
   providers: [LocalizationService, TitleService],
 })

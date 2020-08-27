@@ -47,18 +47,36 @@ export class AppMenus {
 
       link: '',
       children: [
+        //   {
+        //     text: '',
+        //     i18n: 'Books', //书籍
+        //     icon: { type: 'icon', value: 'book' },
+        //     link: '/app/cloud-book-list/books',
+        //     acl: 'Pages.BookManager',
+        //   },
         {
-          text: '',
-          i18n: 'Books', //书籍
-          icon: { type: 'icon', value: 'book' },
+          text: 'Book',
+          i18n: 'Book',
+          acl: 'Pages.Book',
+          icon: 'iconfont icon-dashboard',
           link: '/app/cloud-book-list/books',
-          acl: 'Page.BookManager',
+          sort: 99,
         },
         {
           text: '',
           i18n: 'BookList', //书籍列表
-          icon: { type: 'icon', value: 'ordered-list' },
+          icon: 'iconfont icon-dashboard',
+          acl: 'Pages.BookList',
           link: '/app/cloud-book-list/book-list',
+        },
+        {
+          //	的菜单按钮
+          text: 'BookTag',
+          i18n: 'BookTag',
+          acl: 'Pages.BookTag',
+          icon: 'iconfont icon-dashboard',
+          link: '/app/cloud-book-list/book-tag',
+          sort: 99,
         },
       ],
     },

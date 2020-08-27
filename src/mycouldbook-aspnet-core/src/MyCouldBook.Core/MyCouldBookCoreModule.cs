@@ -5,7 +5,6 @@ using Abp.Zero;
 using Abp.Zero.Configuration;
 using MyCouldBook.Authorization.Roles;
 using MyCouldBook.Authorization.Users;
-using MyCouldBook.BookListManagement.Books.Authorization;
 using MyCouldBook.Configuration;
 using MyCouldBook.Localization;
 using MyCouldBook.MultiTenancy;

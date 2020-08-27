@@ -1,4 +1,5 @@
 ﻿using Abp.Domain.Entities.Auditing;
+using MyCouldBook.BookListManagement.RelationShipps;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,5 +31,8 @@ namespace MyCouldBook.BookListManagement.Books
         /// 简介
         /// </summary>
         public string Intro { get; set; }
+
+        public virtual ICollection<BookAndBookTag> BookAndBookTags { get; set; }
+        public virtual ICollection<BookListAndBook> BookListAndBooks { get; set; }
     }
 }

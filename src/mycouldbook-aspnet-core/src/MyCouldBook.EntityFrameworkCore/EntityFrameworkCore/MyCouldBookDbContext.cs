@@ -6,6 +6,8 @@ using MyCouldBook.MultiTenancy;
 using MyCouldBook.BookListManagement.Books;
 using MyCouldBook.BookListManagement.BookList;
 using MyCouldBook.BookListManagement.BookTag;
+using MyCouldBook.EntityMapper.Books;
+using MyCouldBook.BookListManagement.RelationShipps;
 
 namespace MyCouldBook.EntityFrameworkCore
 {
@@ -16,6 +18,8 @@ namespace MyCouldBook.EntityFrameworkCore
         public DbSet<Book> Books { get; set; }
         public DbSet<BookList> BookLists { get; set; }
         public DbSet<BookTag> BookTags { get; set; }
+        public DbSet<BookAndBookTag> BookAndBookTags { get; set; }
+        public DbSet<BookListAndBook> BookListAndBooks { get; set; }
 
         #endregion
 
@@ -24,5 +28,6 @@ namespace MyCouldBook.EntityFrameworkCore
             : base(options)
         {
         }
+
     }
 }
