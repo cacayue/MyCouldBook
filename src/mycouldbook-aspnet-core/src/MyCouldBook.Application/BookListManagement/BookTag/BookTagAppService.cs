@@ -148,7 +148,8 @@ BookTagEditDto editDto;
 			//TODO:新增前的逻辑判断，是否允许新增
 
             var entity = ObjectMapper.Map<BookTag>(input);
-			if (await CheckForDuplicateName(input.TagName, input.Id.Value))
+			var result = CheckForDuplicateName(input.TagName, null);
+			if (result)
 			{
 				throw new UserFriendlyException("标签名称不能重复");
 			}
@@ -168,7 +169,8 @@ BookTagEditDto editDto;
 			//TODO:更新前的逻辑判断，是否允许更新
 
 			var entity = await _bookTagRepository.GetAsync(input.Id.Value);
-			if (await CheckForDuplicateName(input.TagName, input.Id.Value))
+			var result = CheckForDuplicateName(input.TagName, input.Id.Value);
+			if (result)
             {
 				throw new UserFriendlyException("标签名称不能重复");
             }
@@ -205,15 +207,15 @@ BookTagEditDto editDto;
 
 
 
-		private async Task<bool> CheckForDuplicateName(string name,long id)
+		private bool CheckForDuplicateName(string name,long? id)
         {
-			var model = await _bookTagRepository.FirstOrDefaultAsync(a => a.TagName == name);
+			var model = _bookTagRepository.FirstOrDefault(a => a.TagName == name);
 			if(model == null)
             {
 				return false;
             }
 			//自己id下的可以重复
-			if(model.Id == id)
+			if(id.HasValue && model.Id == id.Value)
             {
 				return false;
 			}

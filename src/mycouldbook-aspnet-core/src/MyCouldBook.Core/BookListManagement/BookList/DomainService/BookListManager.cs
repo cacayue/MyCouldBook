@@ -2,6 +2,7 @@
 
 using Abp.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using MyCouldBook.BookListManagement.RelationShipps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,14 +18,17 @@ namespace MyCouldBook.BookListManagement.BookList.DomainService
     {
 		
 		private readonly IRepository<BookList,long> _bookListRepository;
+		private readonly IRepository<BookListAndBook,long> _bookListAndBookRepository;
 
-		/// <summary>
-		/// BookList的构造方法
-		/// 通过构造函数注册服务到依赖注入容器中
-		///</summary>
-	public BookListManager(IRepository<BookList, long> bookListRepository)	{
+        /// <summary>
+        /// BookList的构造方法
+        /// 通过构造函数注册服务到依赖注入容器中
+        ///</summary>
+        public BookListManager(IRepository<BookList, long> bookListRepository,
+          IRepository<BookListAndBook, long> bookListAndBookRepository)	{
 			_bookListRepository =  bookListRepository;
-		}
+            _bookListAndBookRepository = bookListAndBookRepository;
+        }
 
 		 #region 查询判断的业务
 
@@ -75,6 +79,7 @@ namespace MyCouldBook.BookListManagement.BookList.DomainService
         public async Task<BookList> CreateAsync(BookList entity)
         {
             entity.Id = await _bookListRepository.InsertAndGetIdAsync(entity);
+            await CurrentUnitOfWork.SaveChangesAsync();
             return entity;
         }
 
@@ -99,19 +104,38 @@ namespace MyCouldBook.BookListManagement.BookList.DomainService
             //TODO:删除前的逻辑判断，是否允许删除
             await _bookListRepository.DeleteAsync(a => input.Contains(a.Id));
         }
-	 
-			
-							//// custom codes
-									
-							
-
-							//// custom codes end
 
 
+        /// <summary>
+        /// 创建书单与书籍
+        /// </summary>
+        /// <param name="bookListId"></param>
+        /// <param name="bookIds"></param>
+        /// <returns></returns>
+        public async Task CreateBookAndBookList(long bookListId, ICollection<long> bookIds)
+        {
+            await _bookListAndBookRepository.DeleteAsync(item => item.Id == bookListId);
+            await CurrentUnitOfWork.SaveChangesAsync();
+            var newBookId = new List<long>();
+            foreach (var bookId in bookIds)
+            {
+                if (newBookId.Exists(a => a == bookId))
+                {
+                    continue;
+                }
+                await _bookListAndBookRepository.InsertAsync(new BookListAndBook
+                {
+                    BookId = bookId,
+                    BookListId = bookListId
+                });
+                newBookId.Add(bookId);
+            }
+        }
+        public async Task<ICollection<BookListAndBook>> GetBookTagsByBookId(long? bookListId)
+        {
+            return await _bookListAndBookRepository.GetAll()
+                .AsNoTracking().Where(a => a.BookListId == bookListId).ToListAsync();
+        }
 
-		 
-		  
-		 
-
-	}
+    }
 }

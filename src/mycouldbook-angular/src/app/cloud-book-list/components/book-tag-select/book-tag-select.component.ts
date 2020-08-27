@@ -60,7 +60,6 @@ export class BookTagSelectComponent extends AppComponentBase implements OnInit {
 
   handleInputConfirm(e): void {
     //过滤已存在的
-    console.log(this.booktagselect);
     const booktagselectValues = this.booktagselect.value;
     for (let index = 0; index < booktagselectValues.length; index++) {
       const element = booktagselectValues[index];

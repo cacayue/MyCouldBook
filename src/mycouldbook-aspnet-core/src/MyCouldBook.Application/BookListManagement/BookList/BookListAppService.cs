@@ -18,6 +18,7 @@ using MyCouldBook.BookListManagement.BookList;
 using MyCouldBook.BookListManagement.BookList.Dtos;
 using MyCouldBook.BookListManagement.BookList.DomainService;
 using MyCouldBook.Authorization;
+using MyCouldBook.BookListManagement.Books;
 
 namespace MyCouldBook.BookListManagement.BookList
 {
@@ -27,25 +28,29 @@ namespace MyCouldBook.BookListManagement.BookList
     [AbpAuthorize]
     public class BookListAppService : MyCouldBookAppServiceBase, IBookListAppService
     {
-         private readonly IRepository<BookList, long>        _bookListRepository;
+         private readonly IRepository<BookList, long> _bookListRepository;
+         private readonly IRepository<Book, long> _bookRepository;
 
 
 
-        private readonly IBookListManager _bookListManager;
+		private readonly IBookListManager _bookListManager;
         /// <summary>
         /// 构造函数
         ///</summary>
         public BookListAppService(
 		IRepository<BookList, long>  bookListRepository
-              ,IBookListManager bookListManager       
+              ,IBookListManager bookListManager   ,
+		IRepository<Book, long> bookRepository
 
-             )
+
+			 )
             {
             _bookListRepository = bookListRepository;
              _bookListManager=bookListManager;
+			_bookRepository = bookRepository;
 
 
-            }
+			}
 
 
             /// <summary>
@@ -100,12 +105,25 @@ namespace MyCouldBook.BookListManagement.BookList
 		public async Task<GetBookListForEditOutput> GetForEdit(NullableIdDto<long> input)
 		{
 			var output = new GetBookListForEditOutput();
-BookListEditDto editDto;
-
+			BookListEditDto editDto;
+			List<long> allSelectedBookIds = null;
+			var allBooks = ObjectMapper
+				.Map<List<BookSelectedListDto>>((await _bookRepository.GetAllListAsync()));
 			if (input.Id.HasValue)
 			{
 				var entity = await _bookListRepository.GetAsync(input.Id.Value);
 				editDto = ObjectMapper.Map<BookListEditDto>(entity);
+				allSelectedBookIds = (await _bookListManager.GetBookTagsByBookId(editDto.Id)).Select(b => b.BookId).ToList();
+				if (allSelectedBookIds.Count > 0)
+				{
+					foreach (var book in allBooks)
+					{
+						if (allSelectedBookIds.Any(b => b == book.Id))
+						{
+							book.IsSelected = true;
+						}
+					}
+				}
 			}
 			else
 			{
@@ -115,6 +133,7 @@ BookListEditDto editDto;
 
 
             output.BookList = editDto;
+            output.Books = allBooks;
 			return output;
 		}
 
@@ -130,11 +149,11 @@ BookListEditDto editDto;
 
 			if (input.BookList.Id.HasValue)
 			{
-				await Update(input.BookList);
+				await Update(input.BookList,input.bookIds);
 			}
 			else
 			{
-				await Create(input.BookList);
+				await Create(input.BookList, input.bookIds);
 			}
 		}
 
@@ -143,31 +162,36 @@ BookListEditDto editDto;
 		/// 新增
 		/// </summary>
 		[AbpAuthorize(BookListPermissions.Create)]
-		protected virtual async Task<BookListEditDto> Create(BookListEditDto input)
+		protected virtual async Task<BookListEditDto> Create(BookListEditDto input,ICollection<long> bookIds)
 		{
 			//TODO:新增前的逻辑判断，是否允许新增
 
             var entity = ObjectMapper.Map<BookList>(input);
             //调用领域服务
             entity = await _bookListManager.CreateAsync(entity);
-
-            var dto=ObjectMapper.Map<BookListEditDto>(entity);
-            return dto;
+			if (bookIds.Count > 0)
+			{
+				await _bookListManager.CreateBookAndBookList(entity.Id, bookIds);
+			}
+			var dto=ObjectMapper.Map<BookListEditDto>(entity);
+			
+			return dto;
 		}
 
 		/// <summary>
 		/// 编辑
 		/// </summary>
 		[AbpAuthorize(BookListPermissions.Edit)]
-		protected virtual async Task Update(BookListEditDto input)
+		protected virtual async Task Update(BookListEditDto input, ICollection<long> bookIds)
 		{
 			//TODO:更新前的逻辑判断，是否允许更新
 
-		 var entity = await _bookListRepository.GetAsync(input.Id.Value);
+			var entity = await _bookListRepository.GetAsync(input.Id.Value);
           //  input.MapTo(entity);
           //将input属性的值赋值到entity中
              ObjectMapper.Map(input, entity);
             await _bookListManager.UpdateAsync(entity);
+			await _bookListManager.CreateBookAndBookList(entity.Id, bookIds);
 		}
 
 

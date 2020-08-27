@@ -176,7 +176,8 @@ namespace MyCouldBook.BookListManagement.Books
             //调用领域服务
             entity = await _bookManager.CreateAsync(entity);
 			if(tagIds.Count> 0)
-            {await _bookManager.CreateBookAndBookTag(entity.Id, tagIds);
+            {
+				await _bookManager.CreateBookAndBookTag(entity.Id, tagIds);
 			}
             var dto=ObjectMapper.Map<BookEditDto>(entity);
             return dto;

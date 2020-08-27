@@ -13,9 +13,6 @@ namespace MyCouldBook.BookListManagement.BookList.Dtos
 
         public BookListEditDto BookList { get; set; }
 
-							//// custom codes		
-							
-
-							//// custom codes end
-    }
+		public ICollection<BookSelectedListDto> Books { get; set; }
+	}
 }

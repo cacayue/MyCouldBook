@@ -1,5 +1,6 @@
 
 using AutoMapper;
+using MyCouldBook.BookListManagement.BookList.Dtos;
 using MyCouldBook.BookListManagement.Books;
 using MyCouldBook.BookListManagement.Books.Dtos;
 
@@ -20,12 +21,13 @@ namespace MyCouldBook.CustomDtoAutoMapper
 
             configuration.CreateMap <BookEditDto,Book>();
             configuration.CreateMap <Book,BookEditDto>();
-					 
-							//// custom codes
-									
-							
+            configuration.CreateMap <Book, BookSelectedListDto>();
 
-							//// custom codes end
+            //// custom codes
+
+
+
+            //// custom codes end
         }
 	}
 }

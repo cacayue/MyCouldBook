@@ -30,12 +30,12 @@
             {{l("Create")}}
           </span>
         </button>
-        <button nz-button nzType="default" *ngIf="isGranted('Pages.BookList.ExportExcel')" (click)="exportToExcel()">
+        <!-- <button nz-button nzType="default" *ngIf="isGranted('Pages.BookList.ExportExcel')" (click)="exportToExcel()">
           <i class="iconfont icon-file-excel"></i>
           <span>
             {{l("ExportToExcel")}}
           </span>
-        </button>
+        </button> -->
         <ng-container *ngIf="selectedDataItems.length > 0">
           <button nz-button [nzType]="'danger'" *ngIf="isGranted('Pages.BookList.BatchDelete')" (click)="batchDelete()">
             <i class="iconfont icon-delete"></i>

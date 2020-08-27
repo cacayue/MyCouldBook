@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Abp.Domain.Services;
-
+using MyCouldBook.BookListManagement.RelationShipps;
 
 namespace MyCouldBook.BookListManagement.BookList.DomainService
 {
@@ -66,17 +66,8 @@ namespace MyCouldBook.BookListManagement.BookList.DomainService
 		/// <returns></returns>
 		Task BatchDelete(List<long> input);
 
+		Task CreateBookAndBookList(long bookListId, ICollection<long> bookIds);
 
-		
-							//// custom codes
-									
-							
-
-							//// custom codes end
-
-		 
-      
-         
-
-    }
+		Task<ICollection<BookListAndBook>> GetBookTagsByBookId(long? bookId);
+	}
 }

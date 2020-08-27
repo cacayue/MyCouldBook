@@ -15,6 +15,7 @@ import { BookListComponent } from './book-list/book-list.component';
 import { BookTagComponent } from './book-tag/book-tag.component';
 import { CreateOrEditBookTagComponent } from './book-tag/create-or-edit-book-tag/create-or-edit-book-tag.component';
 import { CreateOrEditBookListComponent } from './book-list/create-or-edit-book-list/create-or-edit-book-list.component';
+import { BookListSelectComponent } from './components/book-list-select/book-list-select.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { CreateOrEditBookListComponent } from './book-list/create-or-edit-book-l
     ImgShowComponent,
     BookTagSelectComponent,
     CreateOrEditBookListComponent,
+    BookListSelectComponent,
   ],
   imports: [
     CommonModule,
@@ -43,6 +45,7 @@ import { CreateOrEditBookListComponent } from './book-list/create-or-edit-book-l
     ImgShowComponent,
     BookTagSelectComponent,
     CreateOrEditBookListComponent,
+    BookListSelectComponent,
   ],
   providers: [LocalizationService, TitleService],
 })

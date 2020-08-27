@@ -10,11 +10,7 @@ namespace MyCouldBook.BookListManagement.BookList.Dtos
     {
         [Required]
         public BookListEditDto BookList { get; set; }
-							
-							//// custom codes
-									
-							
 
-							//// custom codes end
+        public ICollection<long> bookIds { get; set; }
     }
 }

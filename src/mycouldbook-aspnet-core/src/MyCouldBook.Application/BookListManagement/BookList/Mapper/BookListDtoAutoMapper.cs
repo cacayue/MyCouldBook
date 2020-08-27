@@ -20,12 +20,12 @@ namespace MyCouldBook.CustomDtoAutoMapper
 
             configuration.CreateMap <BookListEditDto,BookList>();
             configuration.CreateMap <BookList,BookListEditDto>();
-					 
-							//// custom codes
-									
-							
 
-							//// custom codes end
+            //// custom codes
+
+
+
+            //// custom codes end
         }
 	}
 }

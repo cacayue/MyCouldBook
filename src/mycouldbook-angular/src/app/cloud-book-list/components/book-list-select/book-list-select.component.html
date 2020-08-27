@@ -1,0 +1,17 @@
+<nz-spin [nzTip]="'加载中...'" [nzSpinning]="isLoading">
+  <nz-select
+    #booklistselect
+    nzMode="multiple"
+    nzPlaceHolder="请选择书籍"
+    [(ngModel)]="listOfSelectedValue"
+    style="width: 100%;"
+    (ngModelChange)="modelChange()"
+  >
+    <nz-option
+      *ngFor="let option of listOfBookOptions"
+      [nzLabel]="option.name"
+      [nzValue]="option.id"
+    >
+    </nz-option>
+  </nz-select>
+</nz-spin>
