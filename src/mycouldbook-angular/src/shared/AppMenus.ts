@@ -44,7 +44,7 @@ export class AppMenus {
       text: '',
       i18n: 'CloudBooks',
       icon: { type: 'icon', value: 'menu-unfold' },
-      acl: 'Page.BookManager',
+
       link: '',
       children: [
         {
@@ -52,6 +52,7 @@ export class AppMenus {
           i18n: 'Books', //书籍
           icon: { type: 'icon', value: 'book' },
           link: '/app/cloud-book-list/books',
+          acl: 'Page.BookManager',
         },
         {
           text: '',
