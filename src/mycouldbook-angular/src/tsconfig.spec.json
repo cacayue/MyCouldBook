@@ -7,8 +7,8 @@
       "node"
     ],
     "paths": {
-      "@abp/*": [ "../node_modules/abp-ng2-module/dist/src/*" ],  
-      "@abp": [ "../node_modules/abp-ng2-module/dist/src" ],
+      "@abp/*": ["../node_modules/abp-ng2-module/dist/src/*"],
+      "@abp": ["../node_modules/abp-ng2-module/dist/src"],
       "@appshared": ["app/shared"],
       "@appshared/*": ["app/shared/*"],
       "@testing": ["testing"],
@@ -18,6 +18,8 @@
       "@app/*": ["./app/*"],
       "@shared": ["shared"],
       "@shared/*": ["shared/*"],
+      "@yoyo": ["../node_modules/yoyo-ng-module/src"],
+      "@yoyo/*": ["../node_modules/yoyo-ng-module/src/*"]
     },
     "baseUrl": "./"
   },

@@ -11,6 +11,7 @@ namespace MyCouldBook.BookListManagement.Books.Mapper
         public static void CreateMappings(IMapperConfigurationExpression mapper)
         {
             mapper.CreateMap<Book, BookListDto>();
+            mapper.CreateMap<Book, BookEditInput>();
             mapper.CreateMap<BookEditInput, Book>();
         }
     }

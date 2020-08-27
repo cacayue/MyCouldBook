@@ -243,7 +243,16 @@
     <!--云书单-->
       <text name="CloudBooks" value="云书单" />
       <text name="Books" value="书单" />
-      <text name="BookList" value="书单列表" />
+      <text name="Create" value="新增" />
+      <text name="BatchDelete" value="批量删除" />
+      <text name="ClearEmpty" value="清空" />
+      <text name="ImgUrl" value="封面" />
+      <text name="Author" value="作者" />
+      <text name="Intro" value="简介" />
+      <text name="GridFooterDisplayText" value="当前{0}页/共{1}页.共{2}条/显示{3}-{4}条" />
+      <text name="GridSelectedXItemsTips">
+          <![CDATA[已选择<strong class="text-primary">{0}</strong>项]]>
+      </text> 
   </texts>
 </localizationDictionary>
 

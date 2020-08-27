@@ -1,31 +1,32 @@
 import { Component, OnInit, Input, Injector } from '@angular/core';
 import { ModalComponentBase } from '@shared/component-base/modal-component-base';
-import { RoleDto, ListResultDtoOfPermissionDto, RoleServiceProxy } from '@shared/service-proxies/service-proxies';
+import {
+  RoleDto,
+  PermissionDtoListResultDto,
+  RoleServiceProxy,
+} from '@shared/service-proxies/service-proxies';
 import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-role',
   templateUrl: './edit-role.component.html',
-  styles: []
+  styles: [],
 })
 export class EditRoleComponent extends ModalComponentBase implements OnInit {
-
   @Input() id: number;
-  permissions: ListResultDtoOfPermissionDto = null;
+  permissions: PermissionDtoListResultDto = null;
   role: RoleDto = null;
 
   permissionList = [];
 
-  constructor(
-    injector: Injector,
-    private _roleService: RoleServiceProxy
-  ) {
+  constructor(injector: Injector, private _roleService: RoleServiceProxy) {
     super(injector);
   }
 
   ngOnInit() {
-    this._roleService.getAllPermissions()
-      .subscribe((permissions: ListResultDtoOfPermissionDto) => {
+    this._roleService
+      .getAllPermissions()
+      .subscribe((permissions: PermissionDtoListResultDto) => {
         this.permissions = permissions;
 
         this.fetchData();
@@ -33,20 +34,21 @@ export class EditRoleComponent extends ModalComponentBase implements OnInit {
   }
 
   fetchData(): void {
-    this._roleService.get(this.id)
-      .finally(() => {
-
-      })
+    this._roleService
+      .get(this.id)
+      .finally(() => {})
       .subscribe((result: RoleDto) => {
         this.role = result;
-        this.permissions.items.forEach((item) => {
+        this.permissions.items.forEach(item => {
           this.permissionList.push({
-            label: item.displayName, value: item.name, checked: this.checkPermission(item.name), disabled: this.role.isStatic
+            label: item.displayName,
+            value: item.name,
+            checked: this.checkPermission(item.name),
+            disabled: this.role.isStatic,
           });
         });
       });
   }
-
 
   checkPermission(permissionName: string): boolean {
     return this.role.permissions.indexOf(permissionName) != -1;
@@ -56,7 +58,7 @@ export class EditRoleComponent extends ModalComponentBase implements OnInit {
     this.saving = true;
     let tmpPermissions = [];
 
-    this.permissionList.forEach((item) => {
+    this.permissionList.forEach(item => {
       if (item.checked) {
         tmpPermissions.push(item.value);
       }
@@ -64,7 +66,8 @@ export class EditRoleComponent extends ModalComponentBase implements OnInit {
 
     this.role.permissions = tmpPermissions;
 
-    this._roleService.update(this.role)
+    this._roleService
+      .update(this.role)
       .finally(() => {
         this.saving = false;
       })
@@ -73,5 +76,4 @@ export class EditRoleComponent extends ModalComponentBase implements OnInit {
         this.success();
       });
   }
-
 }

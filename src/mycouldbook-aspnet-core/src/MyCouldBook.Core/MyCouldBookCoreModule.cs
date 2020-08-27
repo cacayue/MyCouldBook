@@ -5,6 +5,7 @@ using Abp.Zero;
 using Abp.Zero.Configuration;
 using MyCouldBook.Authorization.Roles;
 using MyCouldBook.Authorization.Users;
+using MyCouldBook.BookListManagement.Books.Authorization;
 using MyCouldBook.Configuration;
 using MyCouldBook.Localization;
 using MyCouldBook.MultiTenancy;
@@ -28,6 +29,7 @@ namespace MyCouldBook
 
             // Enable this line to create a multi-tenant application.
             Configuration.MultiTenancy.IsEnabled = MyCouldBookConsts.MultiTenancyEnabled;
+            
 
             // Configure roles
             AppRoleConfig.Configure(Configuration.Modules.Zero().RoleManagement);

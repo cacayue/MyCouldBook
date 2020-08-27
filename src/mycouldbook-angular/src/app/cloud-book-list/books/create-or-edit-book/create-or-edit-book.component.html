@@ -1,0 +1,66 @@
+<form nz-form #validateForm="ngForm" (ngSubmit)="submitForm()" nzLayout="horizontal" autocomplete="off">
+  <!-- 头部-->
+  <div class="modal-header">
+    <div class="modal-title">
+      <div class="anticon anticon-medicine-box mr-sm">
+
+        <span *ngIf="entityDto.id">编辑</span>
+        <span *ngIf="!entityDto.id">添加</span>
+      </div>
+    </div>
+  </div>
+  <!-- 详情-->
+  <fieldset>
+    <nz-form-item nz-row>
+      <nz-form-label nzFor='imgUrl' nzSm="6" nzXs="24">封面图片URL</nz-form-label>
+      <nz-form-control nzSm="6" nzXs="24" nz-col nzHasFeedback>
+        <input nz-input #imgUrl="ngModel" name="imgUrl" [(ngModel)]="entityDto.imgUrl" placeholder="请输入封面图片">
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item nz-row>
+      <nz-form-label nzFor='name' nzRequired nzSm="6" nzXs="24">书籍名称</nz-form-label>
+      <nz-form-control nzSm="6" nzXs="24" nz-col nzHasFeedback>
+        <input nz-input #name="ngModel" required name="name" [(ngModel)]="entityDto.name" placeholder="请输入书籍名称">
+        <nz-form-explain *ngIf="(name.control.dirty || name.control.touched) && name.control.errors">
+          <ng-container *ngIf="name.control.hasError('required')">内容不能为空</ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item nz-row>
+      <nz-form-label nzFor='author' nzRequired nzSm="6" nzXs="24">作者</nz-form-label>
+      <nz-form-control nzSm="6" nzXs="24" nz-col nzHasFeedback>
+        <input nz-input #author="ngModel" required name="author" [(ngModel)]="entityDto.author" placeholder="请输入作者">
+        <nz-form-explain *ngIf="(author.control.dirty || author.control.touched) && author.control.errors">
+          <ng-container *ngIf="author.control.hasError('required')">内容不能为空</ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item nz-row>
+      <nz-form-label nzFor='intro' nzSm="6" nzXs="24">简介</nz-form-label>
+      <nz-form-control nzSm="6" nzXs="24" nz-col nzHasFeedback>
+        <input nz-input #intro="ngModel" name="intro" [(ngModel)]="entityDto.intro" placeholder="请输入简介">
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item nz-row>
+      <nz-form-label nzFor='priceUrl' nzSm="6" nzXs="24">购买URL</nz-form-label>
+      <nz-form-control nzSm="6" nzXs="24" nz-col nzHasFeedback>
+        <input nz-input #priceUrl="ngModel" name="priceUrl" [(ngModel)]="entityDto.priceUrl" placeholder="请输入购买URL">
+        <nz-form-explain *ngIf="(priceUrl.control.dirty || priceUrl.control.touched) && priceUrl.control.errors">
+          <ng-container *ngIf="priceUrl.control.hasError('required')">内容不能为空</ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+  </fieldset>
+  <!-- 底部-->
+  <div class="modal-footer">
+    <button (click)="close()" type="button" nzType="default" [disabled]="saving" nz-button><i
+        class="anticon anticon-close-circle-o"></i>取消</button>
+    <button type="submit" nzType="primary" nz-button [disabled]="!validateForm.form.valid||saving" [nzLoading]="saving">
+      <i class="anticon anticon-save">保存</i>
+    </button>
+  </div>
+</form>

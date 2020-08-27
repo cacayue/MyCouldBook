@@ -20,12 +20,12 @@
       "@env/*": ["environments/*"],
       "@shared/*": ["shared/*"],
       "@app/*": ["./app/*"],
-      "@layout/*": ["./layout/*"]
+      "@layout/*": ["./layout/*"],
+      "@yoyo": ["../node_modules/yoyo-ng-module/src"],
+      "@yoyo/*": ["../node_modules/yoyo-ng-module/src/*"]
     },
-    "plugins": [
-      {
-        "name": "typescript-lit-html-plugin"
-      }
-    ]
+    "plugins": [{
+      "name": "typescript-lit-html-plugin"
+    }]
   }
 }

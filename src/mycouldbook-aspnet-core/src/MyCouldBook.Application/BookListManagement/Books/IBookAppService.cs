@@ -34,5 +34,7 @@ namespace MyCouldBook.BookListManagement.Books
         /// <param name="input"></param>
         /// <returns></returns>
         Task BatchDeleteBook(List<long> input);
+
+        Task<GetForEditBookOutput> GetForEditBook(NullableIdDto<long> dto);
     }
 }

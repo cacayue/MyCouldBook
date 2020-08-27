@@ -1,47 +1,47 @@
 import { Component, OnInit, Injector, Input } from '@angular/core';
-import { ListResultDtoOfPermissionDto, CreateRoleDto, RoleServiceProxy } from '@shared/service-proxies/service-proxies';
+import {
+  PermissionDtoListResultDto,
+  CreateRoleDto,
+  RoleServiceProxy,
+} from '@shared/service-proxies/service-proxies';
 import { ModalComponentBase } from '@shared/component-base';
 import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create-role',
   templateUrl: './create-role.component.html',
-  styles: []
+  styles: [],
 })
 export class CreateRoleComponent extends ModalComponentBase implements OnInit {
-
-  permissions: ListResultDtoOfPermissionDto = null;
+  permissions: PermissionDtoListResultDto = null;
   role: CreateRoleDto = new CreateRoleDto();
   permissionList = [];
 
-  constructor(
-    injector: Injector,
-    private _roleService: RoleServiceProxy
-  ) {
+  constructor(injector: Injector, private _roleService: RoleServiceProxy) {
     super(injector);
   }
 
   ngOnInit() {
-
-    this._roleService.getAllPermissions()
-      .subscribe((permissions: ListResultDtoOfPermissionDto) => {
+    this._roleService
+      .getAllPermissions()
+      .subscribe((permissions: PermissionDtoListResultDto) => {
         this.permissions = permissions;
 
-        this.permissions.items.forEach((item) => {
+        this.permissions.items.forEach(item => {
           this.permissionList.push({
-            label: item.displayName, value: item.name, checked: true
+            label: item.displayName,
+            value: item.name,
+            checked: true,
           });
         });
-
       });
-
   }
 
   save(): void {
     this.saving = true;
     let tmpPermissions = [];
 
-    this.permissionList.forEach((item) => {
+    this.permissionList.forEach(item => {
       if (item.checked) {
         tmpPermissions.push(item.value);
       }
@@ -49,7 +49,8 @@ export class CreateRoleComponent extends ModalComponentBase implements OnInit {
 
     this.role.permissions = tmpPermissions;
 
-    this._roleService.create(this.role)
+    this._roleService
+      .create(this.role)
       .finally(() => {
         this.saving = false;
       })
@@ -58,5 +59,4 @@ export class CreateRoleComponent extends ModalComponentBase implements OnInit {
         this.success();
       });
   }
-
 }
